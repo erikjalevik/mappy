@@ -52,6 +52,7 @@ class DualMapView: UIView
         typeSwitcher.selectedSegmentIndex = 0;
         typeSwitcher.tintColor = UIColor(hue: 0.03, saturation: 1.0, brightness: 0.9, alpha: 1.0)
         typeSwitcher.setTranslatesAutoresizingMaskIntoConstraints(false)
+        typeSwitcher.addTarget(self, action: "onTypeSwitched:", forControlEvents: .ValueChanged);
         addSubview(typeSwitcher)
     }
 
@@ -267,7 +268,6 @@ class DualMapView: UIView
         
         for constraint in landscapeConstraintsSnp
         {
-            //constraint.install()
             constraint.activate()
         }
     }
@@ -288,6 +288,26 @@ class DualMapView: UIView
             
             default:
                 assert(false, "Huh?")
+        }
+    }
+    
+    // MARK: - Event handlers
+
+    func onTypeSwitched(sender: UISegmentedControl)
+    {
+        switch sender.selectedSegmentIndex
+        {
+            case 0:
+                leftMap.mapType = .Standard
+                rightMap.mapType = .Standard
+            case 1:
+                leftMap.mapType = .Hybrid
+                rightMap.mapType = .Hybrid
+            case 2:
+                leftMap.mapType = .Satellite
+                rightMap.mapType = .Satellite
+            default:
+                assert(false, "Unknown option")
         }
     }
 }
