@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import SnapKit
 
-class DualMapView: UIView
+class DualMapView: UIView, MKMapViewDelegate
 {
     var leftMap = MKMapView()
     var rightMap = MKMapView()
@@ -41,9 +41,11 @@ class DualMapView: UIView
         backgroundColor = UIColor.blackColor()
         
         leftMap.setTranslatesAutoresizingMaskIntoConstraints(false)
+        leftMap.delegate = self;
         addSubview(leftMap)
 
         rightMap.setTranslatesAutoresizingMaskIntoConstraints(false)
+        rightMap.delegate = self;
         addSubview(rightMap)
 
         typeSwitcher.insertSegmentWithTitle("Satellite", atIndex: 0, animated: false)
@@ -308,6 +310,28 @@ class DualMapView: UIView
                 rightMap.mapType = .Satellite
             default:
                 assert(false, "Unknown option")
+        }
+    }
+
+    // MARK: - MKMapViewDelegate
+    
+    func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool)
+    {
+        if animated
+        {
+            // Hack: way of filtering out region changes not initiated by the user,
+            // relying on the fact that they will not have the animated flag set.
+            return;
+        }
+
+        let otherMap = mapView === leftMap ? rightMap : leftMap;
+
+        var otherRegion = otherMap.region
+        if CLLocationCoordinate2DIsValid(otherRegion.center)
+        {
+            let newSpan = mapView.region.span
+            otherRegion.span = newSpan
+            otherMap.setRegion(otherRegion, animated: true)
         }
     }
 }
