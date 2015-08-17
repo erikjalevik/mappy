@@ -10,7 +10,7 @@ import UIKit
 
 class RootController: UIViewController
 {
-    let mapView = DualMapView()
+    let mapView = DualMapView(frame: CGRectZero)
 
     // MARK: - Lifecycle
 
@@ -18,7 +18,7 @@ class RootController: UIViewController
     {
         super.init(coder: aDecoder)
     }
-     
+
     init()
     {
         super.init(nibName: nil, bundle: nil)
