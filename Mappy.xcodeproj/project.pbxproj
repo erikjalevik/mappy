@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A0A97C9C1B6264B10042BB96 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A97C9B1B6264B10042BB96 /* SnapKit.framework */; };
+		A087939E1B82018800B729E4 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = A087939D1B82018800B729E4 /* Cartfile */; };
+		A087939F1B8202C800B729E4 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A97C9B1B6264B10042BB96 /* SnapKit.framework */; };
 		A0ACBCAC1B61169E00DD3172 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ACBCAB1B61169E00DD3172 /* AppDelegate.swift */; };
 		A0ACBCAE1B61169E00DD3172 /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ACBCAD1B61169E00DD3172 /* RootController.swift */; };
 		A0ACBCB11B61169E00DD3172 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0ACBCAF1B61169E00DD3172 /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A087939D1B82018800B729E4 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = SOURCE_ROOT; };
 		A0A97C9B1B6264B10042BB96 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = Carthage/Build/iOS/SnapKit.framework; sourceTree = "<group>"; };
 		A0ACBCA61B61169E00DD3172 /* Mappy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mappy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0ACBCAA1B61169E00DD3172 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -47,7 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0A97C9C1B6264B10042BB96 /* SnapKit.framework in Frameworks */,
+				A087939F1B8202C800B729E4 /* SnapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +85,7 @@
 		A0ACBCA81B61169E00DD3172 /* Mappy */ = {
 			isa = PBXGroup;
 			children = (
+				A087939D1B82018800B729E4 /* Cartfile */,
 				A0ACBCAB1B61169E00DD3172 /* AppDelegate.swift */,
 				A0ACBCAD1B61169E00DD3172 /* RootController.swift */,
 				A0ACBCAF1B61169E00DD3172 /* Main.storyboard */,
@@ -164,6 +167,8 @@
 		A0ACBC9E1B61169E00DD3172 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = Futurice;
 				TargetAttributes = {
@@ -203,6 +208,7 @@
 			files = (
 				A0ACBCB11B61169E00DD3172 /* Main.storyboard in Resources */,
 				A0ACBCB61B61169E00DD3172 /* LaunchScreen.xib in Resources */,
+				A087939E1B82018800B729E4 /* Cartfile in Resources */,
 				A0ACBCB31B61169E00DD3172 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

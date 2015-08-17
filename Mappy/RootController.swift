@@ -14,7 +14,7 @@ class RootController: UIViewController
 
     // MARK: - Lifecycle
 
-    required init(coder aDecoder: NSCoder)
+    required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
     }
@@ -42,7 +42,9 @@ class RootController: UIViewController
     private func makeConstraints()
     {
         mapView.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(self.snp_topLayoutGuideBottom)
+            // HACK: top layout guide seems broken in SnapKit with Swift 2.0, using workaround for now
+            //make.top.equalTo(self.snp_topLayoutGuideBottom)
+            make.top.equalTo(self.view).offset(20)
             make.left.right.bottom.equalTo(self.view)
         }
     }

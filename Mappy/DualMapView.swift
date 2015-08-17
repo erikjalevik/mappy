@@ -36,7 +36,7 @@ class DualMapView: UIView, MKMapViewDelegate
         makeConstraints()
     }
 
-    required init(coder aDecoder: NSCoder)
+    required init?(coder aDecoder: NSCoder)
     {
         fatalError("init(coder:) has not been implemented")
     }
@@ -45,11 +45,11 @@ class DualMapView: UIView, MKMapViewDelegate
     {
         backgroundColor = UIColor.blackColor()
         
-        leftMap.setTranslatesAutoresizingMaskIntoConstraints(false)
+        leftMap.translatesAutoresizingMaskIntoConstraints = false
         leftMap.delegate = self;
         addSubview(leftMap)
 
-        rightMap.setTranslatesAutoresizingMaskIntoConstraints(false)
+        rightMap.translatesAutoresizingMaskIntoConstraints = false
         rightMap.delegate = self;
         addSubview(rightMap)
 
@@ -58,7 +58,7 @@ class DualMapView: UIView, MKMapViewDelegate
         typeSwitcher.insertSegmentWithTitle("Map", atIndex: 0, animated: false)
         typeSwitcher.selectedSegmentIndex = 0;
         typeSwitcher.tintColor = UIColor(hue: 0.03, saturation: 1.0, brightness: 0.9, alpha: 1.0)
-        typeSwitcher.setTranslatesAutoresizingMaskIntoConstraints(false)
+        typeSwitcher.translatesAutoresizingMaskIntoConstraints = false
         typeSwitcher.addTarget(self, action: "onTypeSwitched:", forControlEvents: .ValueChanged);
         addSubview(typeSwitcher)
     }
@@ -168,7 +168,7 @@ class DualMapView: UIView, MKMapViewDelegate
 
     // MARK: - MKMapViewDelegate
     
-    func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool)
+    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool)
     {
         if animated
         {
