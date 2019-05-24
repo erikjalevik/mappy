@@ -28,7 +28,7 @@ class DualMapView: UIView, MKMapViewDelegate
 
     // MARK: - Lifecycle
 
-    override init(frame: CGRect = CGRectZero)
+    override init(frame: CGRect = CGRect.zero)
     {
         super.init(frame: frame)
 
@@ -43,7 +43,7 @@ class DualMapView: UIView, MKMapViewDelegate
 
     private func build()
     {
-        backgroundColor = UIColor.blackColor()
+        backgroundColor = UIColor.black
         
         leftMap.translatesAutoresizingMaskIntoConstraints = false
         leftMap.delegate = self;
@@ -53,13 +53,13 @@ class DualMapView: UIView, MKMapViewDelegate
         rightMap.delegate = self;
         addSubview(rightMap)
 
-        typeSwitcher.insertSegmentWithTitle("Satellite", atIndex: 0, animated: false)
-        typeSwitcher.insertSegmentWithTitle("Hybrid", atIndex: 0, animated: false)
-        typeSwitcher.insertSegmentWithTitle("Map", atIndex: 0, animated: false)
+        typeSwitcher.insertSegment(withTitle: "Satellite", at: 0, animated: false)
+        typeSwitcher.insertSegment(withTitle: "Hybrid", at: 0, animated: false)
+        typeSwitcher.insertSegment(withTitle: "Map", at: 0, animated: false)
         typeSwitcher.selectedSegmentIndex = 0;
         typeSwitcher.tintColor = UIColor(hue: 0.03, saturation: 1.0, brightness: 0.9, alpha: 1.0)
         typeSwitcher.translatesAutoresizingMaskIntoConstraints = false
-        typeSwitcher.addTarget(self, action: "onTypeSwitched:", forControlEvents: .ValueChanged);
+        typeSwitcher.addTarget(self, action: #selector(onTypeSwitched(sender:)), for: .valueChanged)
         addSubview(typeSwitcher)
     }
 
@@ -72,21 +72,22 @@ class DualMapView: UIView, MKMapViewDelegate
 
     private func makeSharedConstraints()
     {
-        typeSwitcher.snp_makeConstraints { (make) -> Void in
-            make.top.left.equalTo(self).offset(margin)
+        typeSwitcher.snp.makeConstraints { (make) in
+            make.top.equalTo(self).offset(margin)
+            make.centerX.equalTo(self)
         }
     }
 
     private func makeLandscapeConstraints()
     {
-        landscapeConstraints = leftMap.snp_prepareConstraints { (make) -> Void in
-            make.top.equalTo(typeSwitcher.snp_bottom).offset(margin)
+        landscapeConstraints = leftMap.snp.prepareConstraints { (make) in
+            make.top.equalTo(typeSwitcher.snp.bottom).offset(margin)
             make.left.equalTo(self).offset(margin)
             make.bottom.equalTo(self).offset(-margin)
-            make.right.equalTo(rightMap.snp_left).offset(-margin)
+            make.right.equalTo(rightMap.snp.left).offset(-margin)
         }
         
-        landscapeConstraints += rightMap.snp_prepareConstraints { (make) -> Void in
+        landscapeConstraints += rightMap.snp.prepareConstraints { (make) in
             make.top.bottom.equalTo(leftMap)
             make.right.equalTo(self).offset(-margin)
             make.width.equalTo(leftMap)
@@ -98,14 +99,14 @@ class DualMapView: UIView, MKMapViewDelegate
         let topMap = leftMap;
         let bottomMap = rightMap;
        
-        portraitConstraints = topMap.snp_prepareConstraints { (make) -> Void in
-            make.top.equalTo(typeSwitcher.snp_bottom).offset(margin)
+        portraitConstraints = topMap.snp.prepareConstraints { (make) in
+            make.top.equalTo(typeSwitcher.snp.bottom).offset(margin)
             make.left.equalTo(self).offset(margin)
-            make.bottom.equalTo(bottomMap.snp_top).offset(-margin)
+            make.bottom.equalTo(bottomMap.snp.top).offset(-margin)
             make.right.equalTo(self).offset(-margin)
         }
 
-        portraitConstraints += bottomMap.snp_prepareConstraints { (make) -> Void in
+        portraitConstraints += bottomMap.snp.prepareConstraints { (make) in
             make.left.right.height.equalTo(topMap)
             make.bottom.equalTo(self).offset(-margin)
         }
@@ -113,15 +114,15 @@ class DualMapView: UIView, MKMapViewDelegate
 
     // MARK: - Public Interface
 
-    func setOrientation(orientation: UIInterfaceOrientation)
+    func setOrientation(_ orientation: UIInterfaceOrientation)
     {
         switch orientation
         {
-            case .Portrait, .PortraitUpsideDown:
+            case .portrait, .portraitUpsideDown:
                 deactivateConstraints(landscapeConstraints)
                 activateConstraints(portraitConstraints)
 
-            case .LandscapeLeft, .LandscapeRight:
+            case .landscapeLeft, .landscapeRight:
                 deactivateConstraints(portraitConstraints)
                 activateConstraints(landscapeConstraints)
             
@@ -130,7 +131,7 @@ class DualMapView: UIView, MKMapViewDelegate
         }
     }
     
-    func activateConstraints(constraints: [Constraint])
+    func activateConstraints(_ constraints: [Constraint])
     {
         for constraint in constraints
         {
@@ -138,7 +139,7 @@ class DualMapView: UIView, MKMapViewDelegate
         }
     }
 
-    func deactivateConstraints(constraints: [Constraint])
+    func deactivateConstraints(_ constraints: [Constraint])
     {
         for constraint in constraints
         {
@@ -148,19 +149,19 @@ class DualMapView: UIView, MKMapViewDelegate
 
     // MARK: - Event handlers
 
-    func onTypeSwitched(sender: UISegmentedControl)
+    @objc private func onTypeSwitched(sender: UISegmentedControl)
     {
         switch sender.selectedSegmentIndex
         {
             case 0:
-                leftMap.mapType = .Standard
-                rightMap.mapType = .Standard
+                leftMap.mapType = .standard
+                rightMap.mapType = .standard
             case 1:
-                leftMap.mapType = .Hybrid
-                rightMap.mapType = .Hybrid
+                leftMap.mapType = .hybrid
+                rightMap.mapType = .hybrid
             case 2:
-                leftMap.mapType = .Satellite
-                rightMap.mapType = .Satellite
+                leftMap.mapType = .satellite
+                rightMap.mapType = .satellite
             default:
                 assert(false, "Unknown option")
         }
@@ -168,7 +169,7 @@ class DualMapView: UIView, MKMapViewDelegate
 
     // MARK: - MKMapViewDelegate
     
-    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool)
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool)
     {
         if animated
         {

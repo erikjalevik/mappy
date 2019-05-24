@@ -10,20 +10,20 @@ import UIKit
 
 class RootController: UIViewController
 {
-    let mapView = DualMapView(frame: CGRectZero)
+    private let mapView = DualMapView(frame: CGRect.zero)
 
     // MARK: - Lifecycle
-
-    required init?(coder aDecoder: NSCoder)
-    {
-        super.init(coder: aDecoder)
-    }
 
     init()
     {
         super.init(nibName: nil, bundle: nil)
     }
-
+    
+    required init?(coder aDecoder: NSCoder)
+    {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -34,43 +34,40 @@ class RootController: UIViewController
 
     private func build()
     {
-        self.view.backgroundColor = UIColor.blackColor()
+        view.backgroundColor = UIColor.black
         
-        self.view.addSubview(mapView)
+        view.addSubview(mapView)
     }
 
     private func makeConstraints()
     {
-        mapView.snp_makeConstraints { (make) -> Void in
-            // HACK: top layout guide seems broken in SnapKit with Swift 2.0, using workaround for now
-            //make.top.equalTo(self.snp_topLayoutGuideBottom)
-            make.top.equalTo(self.view).offset(20)
-            make.left.right.bottom.equalTo(self.view)
+        mapView.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(topLayoutGuide.snp.bottom)
+            make.left.right.bottom.equalTo(view)
         }
     }
 
-    override func viewWillAppear(animated: Bool)
+    override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
         
         // We don't know our initial size until here
-        setLayout(fromSize: self.view.frame.size)
+        setLayout(fromSize: view.frame.size)
     }
 
     // MARK: - Configuration
 
-    override func preferredStatusBarStyle() -> UIStatusBarStyle
-    {
-        return .LightContent
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
     // MARK: - Rotation
 
-    override func viewWillTransitionToSize(
-        size: CGSize,
-        withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator)
+    override func viewWillTransition(
+        to size: CGSize,
+        with coordinator: UIViewControllerTransitionCoordinator)
     {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        super.viewWillTransition(to: size, with: coordinator)
 
         setLayout(fromSize: size)
     }
@@ -78,7 +75,7 @@ class RootController: UIViewController
     private func setLayout(fromSize size: CGSize)
     {
         let toPortrait = size.height > size.width
-        self.mapView.setOrientation(toPortrait ? .Portrait : .LandscapeLeft)
+        mapView.setOrientation(toPortrait ? .portrait : .landscapeLeft)
     }
 
 }
